@@ -20,6 +20,18 @@ h4 {
     color: rdb(100, 100, 100);
 }
 
+.App {
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+
+.library-active {
+    margin-left: 10%;
+}
+
 @import './player';
 @import './song';
 @import './library';

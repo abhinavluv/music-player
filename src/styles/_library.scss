@@ -10,6 +10,7 @@
     transform: translateX(-100%);
     transition: all 0.5s ease;
     opacity: 0;
+    background: rgb(201, 201, 201);
     -webkit-transform: translateX(-100%);
     -moz-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
@@ -28,6 +29,11 @@
     align-items: center;
     padding: 1rem 2rem 1rem 2rem;
     cursor: pointer;
+    transition: background 0.3s ease;
+    -webkit-transition: background 0.3s ease;
+    -moz-transition: background 0.3s ease;
+    -ms-transition: background 0.3s ease;
+    -o-transition: background 0.3s ease;
     img {
         width: 30%;
         border-radius: 50%;
@@ -87,4 +93,10 @@
     -moz-transform: translateX(0%);
     -ms-transform: translateX(0%);
     -o-transform: translateX(0%);
+}
+
+@media screen and (max-width: 768px) {
+    .library {
+        width: 100%;
+    }
 }

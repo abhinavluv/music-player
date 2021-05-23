@@ -14,7 +14,7 @@ function App() {
     const [libraryOpen, setLibraryOpen] = useState(false);
 
     return (
-        <div className='App'>
+        <div className={`App ${libraryOpen ? 'library-active' : ''}`}>
             <Navigation
                 libraryOpen={libraryOpen}
                 setLibraryOpen={setLibraryOpen}
