@@ -1,0 +1,31 @@
+nav {
+    min-height: 10vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        border: 2px solid rgb(65, 65, 65);
+        padding: 0.5rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        &:hover {
+            background: #333;
+            color: #eee;
+        }
+        svg {
+            margin-right: 0.2rem;
+        }
+    }
+}

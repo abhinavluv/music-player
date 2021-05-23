@@ -3,7 +3,7 @@ import LibrarySong from './LibrarySong.component';
 
 const library = (props) => {
     return (
-        <div className='library'>
+        <div className={`library ${props.libraryOpen ? 'active-library' : ''}`}>
             <h2>Library</h2>
             <div className='library-songs'>
                 {props.songs.map((song) => (
