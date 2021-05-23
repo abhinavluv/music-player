@@ -20,6 +20,17 @@ const Player = (props) => {
         loadSong();
     }, [props.isPlaying, props.currentSong]);
 
+    useEffect(() => {
+        const newSongs = props.songs.map((newSong) => {
+            if (newSong.id === props.currentSong.id) {
+                return { ...newSong, active: true };
+            } else {
+                return { ...newSong, active: false };
+            }
+        });
+        props.setSongs(newSongs);
+    }, [props.currentSong]);
+
     // const playSongHandler = () => {
     //     if (props.isPlaying) {
     //         audioRef.current.pause();
@@ -58,6 +69,26 @@ const Player = (props) => {
         setSongInfo({ ...songInfo, currentTime: event.target.value });
     };
 
+    const skipTrackHandler = (direction) => {
+        let currentIndex = props.songs.findIndex(
+            (song) => song.id === props.currentSong.id
+        );
+        if (direction === 'skip-forward') {
+            props.setCurrentSong(
+                props.songs[(currentIndex + 1) % props.songs.length]
+            );
+        }
+        if (direction === 'skip-back') {
+            if ((currentIndex - 1) % props.songs.length === -1) {
+                props.setCurrentSong(props.songs[props.songs.length - 1]);
+                return;
+            }
+            props.setCurrentSong(
+                props.songs[(currentIndex - 1) % props.songs.length]
+            );
+        }
+    };
+
     return (
         <div className='player'>
             <div className='time-control'>
@@ -73,6 +104,7 @@ const Player = (props) => {
             </div>
             <div className='play-control'>
                 <FontAwesomeIcon
+                    onClick={() => skipTrackHandler('skip-back')}
                     className='skip-back'
                     icon={faAngleLeft}
                     size='2x'
@@ -84,6 +116,7 @@ const Player = (props) => {
                     onClick={() => props.setIsPlaying(!props.isPlaying)}
                 />
                 <FontAwesomeIcon
+                    onClick={() => skipTrackHandler('skip-forward')}
                     className='skip-forward'
                     icon={faAngleRight}
                     size='2x'
