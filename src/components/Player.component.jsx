@@ -44,15 +44,20 @@ const Player = (props) => {
     const [songInfo, setSongInfo] = useState({
         currentTime: 0,
         duration: 0,
+        animationPercentage: 0,
     });
 
     const timeUpdateHandler = (event) => {
         const current = event.target.currentTime;
         const songDuration = event.target.duration;
+        const roundedCurrent = Math.round(current);
+        const roundedDuration = Math.round(songDuration);
+        const animation = Math.round((roundedCurrent / roundedDuration) * 100);
         setSongInfo({
             ...songInfo,
             currentTime: current,
             duration: songDuration,
+            animationPercentage: animation,
         });
     };
 
@@ -89,18 +94,30 @@ const Player = (props) => {
         }
     };
 
+    // Add styles to slider
+    const trackAnim = {
+        transform: `translateX(${songInfo.animationPercentage}%)`,
+    };
+
     return (
         <div className='player'>
             <div className='time-control'>
                 <p>{getTime(songInfo.currentTime)}</p>
-                <input
-                    type='range'
-                    min={0}
-                    max={songInfo.duration || 0}
-                    value={songInfo.currentTime}
-                    onChange={dragSliderHandler}
-                />
-                <p>{getTime(songInfo.duration)}</p>
+                <div
+                    className='track'
+                    style={{
+                        background: `linear-gradient(to right, ${props.currentSong.color[0]}, ${props.currentSong.color[1]})`,
+                    }}>
+                    <input
+                        type='range'
+                        min={0}
+                        max={songInfo.duration || 0}
+                        value={songInfo.currentTime}
+                        onChange={dragSliderHandler}
+                    />
+                    <div style={trackAnim} className='animate-track'></div>
+                </div>
+                <p>{songInfo.duration ? getTime(songInfo.duration) : '0:00'}</p>
             </div>
             <div className='play-control'>
                 <FontAwesomeIcon
