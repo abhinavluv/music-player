@@ -7,7 +7,13 @@ const library = (props) => {
             <h2>Library</h2>
             <div className='library-songs'>
                 {props.songs.map((song) => (
-                    <LibrarySong song={song} key={song.id} />
+                    <LibrarySong
+                        song={song}
+                        key={song.id}
+                        setCurrentSong={props.setCurrentSong}
+                        songs={props.songs}
+                        setSongs={props.setSongs}
+                    />
                 ))}
             </div>
         </div>

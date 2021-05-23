@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faPlay,
@@ -11,15 +11,24 @@ const Player = (props) => {
     // Audio Ref
     const audioRef = useRef(null);
 
-    const playSongHandler = () => {
-        if (props.isPlaying) {
-            audioRef.current.pause();
-            props.setIsPlaying(!props.isPlaying);
-        } else {
-            audioRef.current.play();
-            props.setIsPlaying(!props.isPlaying);
-        }
-    };
+    useEffect(() => {
+        const loadSong = async () => {
+            const playPromise = await audioRef.current[
+                props.isPlaying ? 'play' : 'pause'
+            ]();
+        };
+        loadSong();
+    }, [props.isPlaying, props.currentSong]);
+
+    // const playSongHandler = () => {
+    //     if (props.isPlaying) {
+    //         audioRef.current.pause();
+    //         props.setIsPlaying(!props.isPlaying);
+    //     } else {
+    //         audioRef.current.play();
+    //         props.setIsPlaying(!props.isPlaying);
+    //     }
+    // };
 
     const [songInfo, setSongInfo] = useState({
         currentTime: 0,
@@ -56,7 +65,7 @@ const Player = (props) => {
                 <input
                     type='range'
                     min={0}
-                    max={songInfo.duration}
+                    max={songInfo.duration || 0}
                     value={songInfo.currentTime}
                     onChange={dragSliderHandler}
                 />
@@ -72,7 +81,7 @@ const Player = (props) => {
                     className='play'
                     icon={props.isPlaying ? faPause : faPlay}
                     size='2x'
-                    onClick={playSongHandler}
+                    onClick={() => props.setIsPlaying(!props.isPlaying)}
                 />
                 <FontAwesomeIcon
                     className='skip-forward'
