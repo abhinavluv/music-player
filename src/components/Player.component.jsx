@@ -94,6 +94,15 @@ const Player = (props) => {
         }
     };
 
+    const songEndHandler = async () => {
+        let currentIndex = props.songs.findIndex(
+            (song) => song.id === props.currentSong.id
+        );
+        await props.setCurrentSong(
+            props.songs[(currentIndex + 1) % props.songs.length]
+        );
+    };
+
     // Add styles to slider
     const trackAnim = {
         transform: `translateX(${songInfo.animationPercentage}%)`,
@@ -143,7 +152,8 @@ const Player = (props) => {
                 onTimeUpdate={timeUpdateHandler}
                 onLoadedMetadata={timeUpdateHandler}
                 ref={audioRef}
-                src={props.currentSong.audio}></audio>
+                src={props.currentSong.audio}
+                onEnded={songEndHandler}></audio>
         </div>
     );
 };
